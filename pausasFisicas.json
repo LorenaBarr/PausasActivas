@@ -1,0 +1,122 @@
+[
+    {
+        "Nombre de la categoría": "Pausas fisicas",
+        "Actividad": "Abdomen y espalda",
+        "Foto/video": "https://www.youtube.com/watch?v=IOiVPdGGC6E",
+        "Descripción": "Serie corta de ejercicios para activar la espalda y el abdomen."
+    },
+    {
+        "Nombre de la categoría": "Pausas fisicas",
+        "Actividad": "Manos y codos",
+        "Foto/video": "https://www.youtube.com/watch?v=RooKAegD7Lo",
+        "Descripción": "Ejercicios para manos, muñecas y codos, para disminuir la tensión y mejorar la circulación en estas articulaciones."
+    },
+    {
+        "Nombre de la categoría": "Pausas fisicas",
+        "Actividad": "Estiramiento piernas",
+        "Foto/video": "https://www.youtube.com/watch?v=2yx79DV_CeQ",
+        "Descripción": "Estiramiento de piernas para evitar posible lesiones y torceduras en el trabajo."
+    },
+    {
+        "Nombre de la categoría": "Pausas fisicas",
+        "Actividad": "Estiramiento torso y cadera",
+        "Foto/video": "https://www.youtube.com/watch?v=4RLCkRPq7O0",
+        "Descripción": "Ejercicios para estirar torso y cadera, importantes para corregir postura y evitar lesiones de espalda."
+    },
+    {
+        "Nombre de la categoría": "Pausas fisicas",
+        "Actividad": "Estiramiento cuello y hombros",
+        "Foto/video": "https://www.youtube.com/watch?v=fq0WdPFHk9M",
+        "Descripción": "Ejercicios para estirar los hombros y el cuello, liberar la tensión acumulada y prevenir dolor por mala posición."
+    },
+    {
+        "Nombre de la categoría": "Pausa activa recreativa",
+        "Actividad": "Baile libre",
+        "Foto/video": "https://youtu.be/TcaaFR8yA6c?si=ZC42qHlNxoAyI5sf",
+        "Descripción": "Mover el cuerpo al ritmo de una canción durante 3-5 minutos para liberar tensiones."
+    },
+    {
+        "Nombre de la categoría": "Pausa activa recreativa",
+        "Actividad": "Estiramientos con música",
+        "Foto/video": "https://youtu.be/WM5v4b8do3s?si=A94NONPQJU94xScU",
+        "Descripción": "Seguir una rutina corta de estiramientos guiados con música suave."
+    },
+    {
+        "Nombre de la categoría": "Pausa activa recreativa",
+        "Actividad": "Juegos de coordinación",
+        "Foto/video": "https://youtu.be/y8Dr6Oj7_oI?si=ygdH5j5rFnr86Lm3",
+        "Descripción": "Ejercicios rápidos como lanzar una pelota al aire y atraparla o juegos con las manos."
+    },
+    {
+        "Nombre de la categoría": "Pausa activa recreativa",
+        "Actividad": "Imitación de animales",
+        "Foto/video": "https://youtube.com/shorts/zMs7yXkw4f0?si=KVMO2WlRmNHz1mhK",
+        "Descripción": "Moverse imitando animales (saltar como rana, caminar como cangrejo) para activar el cuerpo."
+    },
+    {
+        "Nombre de la categoría": "Pausa activa recreativa",
+        "Actividad": "Minuto de risas",
+        "Foto/video": "https://youtube.com/shorts/8RErOZzLlk4?si=dyta7bMyOrpbzIxA",
+        "Descripción": "Fomentar la risa intencional durante un minuto para reducir el estrés."
+    },
+    {
+        "Nombre de la categoría": "Pausa activa ergonómica",
+        "Actividad": "Estiramiento de cuello y hombros",
+        "Foto/video": "https://youtube.com/shorts/7lhhU5-h9ec?si=ivxPtSrHXD2YZuyW",
+        "Descripción": "Inclinar y girar suavemente la cabeza hacia los lados y atrás. Elevar y soltar los hombros."
+    },
+    {
+        "Nombre de la categoría": "Pausa activa ergonómica",
+        "Actividad": "Movilidad de muñecas",
+        "Foto/video": "https://youtu.be/xlzrWl__ogY?si=MZ6CVKnVaYJFND0W",
+        "Descripción": "Girar muñecas en círculos y estirar dedos para prevenir molestias por el uso del teclado."
+    },
+    {
+        "Nombre de la categoría": "Pausa activa ergonómica",
+        "Actividad": "Estiramiento de espalda baja",
+        "Foto/video": "https://youtube.com/shorts/7IuLQK2dqN4?si=POUKLcE5x31dBwPw",
+        "Descripción": "Inclinarse hacia adelante desde la silla con los brazos hacia el suelo, manteniendo la espalda relajada."
+    },
+    {
+        "Nombre de la categoría": "Pausa activa ergonómica",
+        "Actividad": "Elevación de piernas",
+        "Foto/video": "https://youtu.be/2yx79DV_CeQ?si=2Z7-lJfmXHVW_qN-",
+        "Descripción": "Desde la silla, elevar alternadamente las piernas estiradas para mejorar la circulación."
+    },
+    {
+        "Nombre de la categoría": "Pausa activa ergonómica",
+        "Actividad": "Estiramiento de pecho y brazos",
+        "Foto/video": "https://youtu.be/6l36ClpFSis?si=I3Y2EnmONB8hT-F2",
+        "Descripción": "Llevar los brazos hacia atrás y juntar los omóplatos para abrir el pecho y mejorar la postura."
+    },
+    {
+        "Nombre de la categoría": "Pausa activa visual",
+        "Actividad": "Parpadeo consciente",
+        "Foto/video": "https://youtu.be/lQ7JW3AMGeA",
+        "Descripción": "Parpadear de forma consciente (cerrar y abrir los ojos con intención)."
+    },
+    {
+        "Nombre de la categoría": "Pausa activa visual",
+        "Actividad": "Regla 20-20-20",
+        "Foto/video": "https://youtu.be/fXdb6YsEuNg",
+        "Descripción": "Cada 20 minutos, mira algo a 6 metros (20 pies) de distancia durante 20 segundos para relajar el enfoque."
+    },
+    {
+        "Nombre de la categoría": "Pausa activa visual",
+        "Actividad": "Trazado de un “8” con la mirada",
+        "Foto/video": "https://youtu.be/1g2cs5HwTRs",
+        "Descripción": "Siguiendo con los ojos un patrón de figura 8 imaginario se mejora la coordinación y flexibilidad del movimiento ocular."
+    },
+    {
+        "Nombre de la categoría": "Pausa activa visual",
+        "Actividad": "Palming (relajación con las mano)",
+        "Foto/video": "https://youtu.be/EsDlgdOx-pw",
+        "Descripción": "Cubre los ojos con las palmas, sin presionar, respira profundo y relájate; ayuda a reducir el estímulo visual y el estrés."
+    },
+    {
+        "Nombre de la categoría": "Pausa activa visual",
+        "Actividad": "Enfoque cercano-lejano (Focus shifting)",
+        "Foto/video": "https://youtu.be/tDx8Vxn8nHU",
+        "Descripción": "Alterna tu mirada entre un objeto cercano (tu dedo o lápiz) y uno lejano durante varias repeticiones. Fortalece los músculos oculares."
+    }
+]
