@@ -1,12 +1,65 @@
-import { configureStore } from '@reduxjs/toolkit';
-import authReducer from '../features/authSlice';
+// app/store.ts - Adaptado a tus tipos existentes
+import { configureStore, combineReducers } from '@reduxjs/toolkit'
+import authSlice from '../features/authSlice'
+import activitySlice from '../features/activitySlice'
 
+// Helper functions para manejar localStorage de forma segura
+const loadState = () => {
+    try {
+        const serializedState = localStorage.getItem('pausasActivasState')
+        if (serializedState === null) {
+            return undefined
+        }
+        return JSON.parse(serializedState)
+    } catch (error) {
+        console.warn('Error loading state from localStorage:', error)
+        // Limpia el estado corrupto
+        localStorage.removeItem('pausasActivasState')
+        return undefined
+    }
+}
+
+const saveState = (state: any) => {
+    try {
+        const serializedState = JSON.stringify(state)
+        localStorage.setItem('pausasActivasState', serializedState)
+    } catch (error) {
+        console.warn('Error saving state to localStorage:', error)
+    }
+}
+
+// Cargar el estado inicial del localStorage
+const persistedState = loadState()
+
+// Combina los reducers en uno solo
+const rootReducer = combineReducers({
+    auth: authSlice,
+    activities: activitySlice,
+})
+
+// Crear el store con estado inicial
 export const store = configureStore({
-    reducer: {
-        auth: authReducer,
-    },
-});
+    reducer: rootReducer,
+    preloadedState: persistedState, // Usar el estado cargado del localStorage
+})
 
-// Tipos para usar en componentes
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+// Guardar cambios en localStorage cuando el estado cambie
+store.subscribe(() => {
+    const state = store.getState()
+    // Solo guardar partes específicas del estado
+    saveState({
+        auth: {
+            user: state.auth.user,
+            token: state.auth.token,
+            isAuthenticated: state.auth.isAuthenticated,
+        },
+        activities: {
+            completedToday: state.activities.completedToday,
+            selectedCategory: state.activities.selectedCategory,
+            searchTerm: state.activities.searchTerm,
+        }
+    })
+})
+
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch

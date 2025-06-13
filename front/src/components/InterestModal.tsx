@@ -1,63 +1,104 @@
-import React, { useState } from 'react';
+// src/components/InterestModal.tsx
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { updateUserInterests } from '../features/userSlice'
+import { X } from 'lucide-react'
 
-const options = [
-  'Pausas activas físicas',
-  'Pausas activas visuales',
-  'Pausas activas cognitivas',
-  'Pausas recreativas',
-  'Pausas activas ergonómicas',
-];
-
-interface Props {
-  onSubmit: (selected: string[]) => void;
+interface InterestModalProps {
+  isOpen: boolean
+  onClose: () => void
 }
 
-const InterestModal: React.FC<Props> = ({ onSubmit }) => {
-  const [selected, setSelected] = useState<string[]>([]);
+const INTERESTS = [
+  { id: 'pausas-fisicas', name: 'Pausas activas físicas' },
+  { id: 'pausas-visuales', name: 'Pausas activas visuales' },
+  { id: 'pausas-cognitivas', name: 'Pausas activas cognitivas' },
+  { id: 'pausas-recreativas', name: 'Pausas recreativas' },
+  { id: 'pausas-ergonomicas', name: 'Pausas activas ergonómicas' }
+]
 
-  const toggleOption = (option: string) => {
-    setSelected((prev) =>
-      prev.includes(option)
-        ? prev.filter((o) => o !== option)
-        : prev.length < 3
-        ? [...prev, option]
-        : prev
-    );
-  };
+const InterestModal: React.FC<InterestModalProps> = ({ isOpen, onClose }) => {
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([])
+  const dispatch = useDispatch()
 
-  const handleSubmit = () => {
-    if (selected.length === 3) {
-      onSubmit(selected);
+  const handleInterestToggle = (interestId: string) => {
+    setSelectedInterests(prev => {
+      if (prev.includes(interestId)) {
+        return prev.filter(id => id !== interestId)
+      } else if (prev.length < 3) {
+        return [...prev, interestId]
+      }
+      return prev
+    })
+  }
+
+  const handleContinue = () => {
+    if (selectedInterests.length === 3) {
+      dispatch(updateUserInterests(selectedInterests))
+      onClose()
     }
-  };
+  }
+
+  if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50">
-      <div className="bg-white p-6 rounded-xl w-full max-w-md">
-        <h2 className="text-xl font-bold mb-4 text-blue-700">¿Qué pausas te interesan?</h2>
-        <div className="flex flex-col gap-2 mb-4">
-          {options.map((option) => (
-            <label key={option} className="flex items-center gap-2">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-lg max-w-md w-full p-6">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold text-gray-800">Selecciona tus intereses</h2>
+          <button 
+            onClick={onClose}
+            className="text-gray-500 hover:text-gray-700"
+          >
+            <X size={24} />
+          </button>
+        </div>
+        
+        <p className="text-gray-600 mb-6">
+          Elige exactamente 3 tipos de pausas activas que más te interesen:
+        </p>
+
+        <div className="space-y-3 mb-6">
+          {INTERESTS.map((interest) => (
+            <label 
+              key={interest.id}
+              className={`flex items-center p-3 rounded-lg border cursor-pointer transition-all ${
+                selectedInterests.includes(interest.id)
+                  ? 'border-blue-500 bg-blue-50'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
               <input
                 type="checkbox"
-                checked={selected.includes(option)}
-                onChange={() => toggleOption(option)}
-                disabled={!selected.includes(option) && selected.length >= 3}
+                checked={selectedInterests.includes(interest.id)}
+                onChange={() => handleInterestToggle(interest.id)}
+                className="mr-3 h-4 w-4 text-blue-600"
+                disabled={!selectedInterests.includes(interest.id) && selectedInterests.length >= 3}
               />
-              {option}
+              <span className="text-gray-700">{interest.name}</span>
             </label>
           ))}
         </div>
-        <button
-          onClick={handleSubmit}
-          disabled={selected.length !== 3}
-          className="w-full bg-blue-600 text-white p-2 rounded-lg disabled:opacity-50"
-        >
-          Continuar
-        </button>
+
+        <div className="flex justify-between items-center">
+          <span className="text-sm text-gray-500">
+            {selectedInterests.length}/3 seleccionados
+          </span>
+          <button
+            onClick={handleContinue}
+            disabled={selectedInterests.length !== 3}
+            className={`px-6 py-2 rounded-lg font-medium transition-all ${
+              selectedInterests.length === 3
+                ? 'bg-blue-600 text-white hover:bg-blue-700'
+                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+            }`}
+          >
+            Continuar
+          </button>
+        </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default InterestModal;
+export default InterestModal

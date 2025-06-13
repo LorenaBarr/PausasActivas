@@ -1,11 +1,14 @@
-const { sql, poolConnect } = require('./src/config/db');
+// testConnection.js
+const { poolConnect, pool } = require('./src/config/db');
 
-(async () => {
+async function testConnection() {
     try {
         await poolConnect;
-        const result = await sql.query`SELECT 1 AS resultado`;
-        console.log('Conexión exitosa:', result.recordset);
+        const result = await pool.request().query('SELECT GETDATE() AS fecha');
+        console.log('Conexión exitosa:', result.recordset[0]);
     } catch (err) {
-        console.error('Error al conectar:', err);
+        console.error('Error al conectar con la base de datos:', err);
     }
-})();
+}
+
+testConnection();

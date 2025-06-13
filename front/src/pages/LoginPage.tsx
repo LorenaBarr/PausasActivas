@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { loginUser } from '../services/api';
 import { loginSuccess } from '../features/authSlice';
 import { useNavigate, Link } from 'react-router-dom';
-import type { AuthResponse } from '../types'; // ajusta el path si es necesario
+import type { AuthResponse } from '../types/types'; 
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -17,7 +17,16 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       const data: AuthResponse = await loginUser(email, password); // asegúrate que esto devuelva AuthResponse
-      dispatch(loginSuccess(data));
+      dispatch(
+        loginSuccess({
+          user: {
+            ...data.user,
+            id: Number(data.user.id), // Convert id to number
+            nombre: data.user.name, // Map 'name' to 'nombre'
+          },
+          token: data.token,
+        })
+      );
       navigate('/');
     } catch {
       setError('Error al iniciar sesión');

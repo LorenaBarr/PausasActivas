@@ -6,7 +6,7 @@ import ProfilePage from '../pages/ProfilePage';
 import HistoryPage from '../pages/HistoryPage';
 
 const AppRouter = () => {
-  const isAuthenticated = false; // luego se conectará a Redux
+  const isAuthenticated = true;
 
   return (
     <Routes>
