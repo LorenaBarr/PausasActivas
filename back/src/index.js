@@ -4,6 +4,7 @@ const cors = require('cors');
 const app = express();
 
 const authRoutes = require('./routes/auth');
+const activitiesRouter = require('./routes/activities');
 
 // Configuración CORS específica para resolver el error
 const corsOptions = {
@@ -18,6 +19,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
+app.use('/api/activities', activitiesRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Servidor corriendo en puerto ${PORT}`));

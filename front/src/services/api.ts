@@ -1,6 +1,6 @@
 // src/services/api.ts
 import axios from 'axios';
-import type { AuthResponse } from '../types/types'; // asegúrate que existe
+import type { AuthResponse, Activity } from '../types/types'; // asegúrate que existe
 
 const api = axios.create({
     baseURL: 'http://localhost:3000/api',
@@ -20,3 +20,7 @@ export const registerUser = async (data: any): Promise<AuthResponse> => {
     return response.data;
 };
 
+export const getActivities = async (): Promise<Activity[]> => {
+    const response = await api.get<Activity[]>('/activities');
+    return response.data;
+};

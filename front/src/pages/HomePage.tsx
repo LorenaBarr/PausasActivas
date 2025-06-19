@@ -6,6 +6,7 @@ import { setRecommendedActivities, setActivities } from '../features/activitySli
 import type { Activity } from '../types/types'
 import ActivityCard from '../components/ActivityCard'
 import Navbar from '../components/Navbar'
+import { getActivities } from '../services/api'
 
 const HomePage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -27,82 +28,18 @@ const HomePage: React.FC = () => {
 
   const loadInitialData = async () => {
     try {
-      // Datos mock que simulan tu API
-      const mockActivities: Activity[] = [
-        {
-          id: '1',
-          name: 'Estiramientos de Cuello',
-          category: 'Pausas Activas Físicas',
-          description: 'Movimientos suaves para relajar el cuello y hombros después de largas horas frente al computador.',
-          instructions: '1. Inclina suavemente la cabeza hacia la derecha. 2. Mantén por 15 segundos. 3. Repite hacia la izquierda. 4. Realiza 3 repeticiones por lado.',
-          videoUrl: 'https://ejemplo.com/video1.mp4',
-          duration: 3,
-          difficulty: 'Fácil',
-          points: 4
-        },
-        {
-          id: '2',
-          name: 'Ejercicios de Brazos',
-          category: 'Pausas Activas Físicas',
-          description: 'Estiramientos específicos para brazos y muñecas que ayudan a prevenir lesiones por movimientos repetitivos.',
-          instructions: '1. Extiende el brazo hacia adelante. 2. Con la otra mano, flexiona la muñeca hacia abajo. 3. Mantén 20 segundos. 4. Cambia de brazo.',
-          imageUrl: '/api/placeholder/400/300',
-          duration: 4,
-          difficulty: 'Fácil',
-          points: 4
-        },
-        {
-          id: '3',
-          name: 'Ejercicios Oculares',
-          category: 'Pausas Activas Visuales',
-          description: 'Movimientos de ojos diseñados para relajar la vista y reducir la fatiga visual.',
-          instructions: '1. Mira hacia arriba por 5 segundos. 2. Mira hacia abajo por 5 segundos. 3. Mira a la izquierda y derecha. 4. Haz círculos con los ojos.',
-          duration: 2,
-          difficulty: 'Fácil',
-          points: 3
-        },
-        {
-          id: '4',
-          name: 'Respiración Profunda',
-          category: 'Pausas Activas Cognitivas',
-          description: 'Técnicas de respiración consciente para reducir el estrés y mejorar la concentración.',
-          instructions: '1. Inhala profundamente por 4 segundos. 2. Mantén el aire por 4 segundos. 3. Exhala lentamente por 6 segundos. 4. Repite 10 veces.',
-          duration: 5,
-          difficulty: 'Medio',
-          points: 5
-        },
-        {
-          id: '5',
-          name: 'Meditación Rápida',
-          category: 'Pausas Activas Cognitivas',
-          description: 'Sesión corta de mindfulness para centrar la mente y reducir la ansiedad.',
-          instructions: '1. Siéntate cómodamente. 2. Cierra los ojos. 3. Enfócate en tu respiración. 4. Cuando la mente divague, vuelve a la respiración.',
-          duration: 5,
-          difficulty: 'Medio',
-          points: 5
-        },
-        {
-          id: '6',
-          name: 'Estiramiento de Espalda',
-          category: 'Pausas Activas Ergonómicas',
-          description: 'Ejercicios para aliviar la tensión en la espalda baja y mejorar la postura.',
-          instructions: '1. De pie, entrelaza las manos sobre la cabeza. 2. Inclínate hacia un lado. 3. Mantén 15 segundos. 4. Repite hacia el otro lado.',
-          duration: 4,
-          difficulty: 'Fácil',
-          points: 4
-        }
-      ]
-      
-      dispatch(setActivities(mockActivities))
-      
-      // Generar recomendaciones basadas en intereses del usuario
-      const recommended = generateRecommendations(mockActivities, user?.interests || [])
-      dispatch(setRecommendedActivities(recommended))
-      
+        // Obtener actividades de la base de datos
+        const activitiesData = await getActivities();
+        dispatch(setActivities(activitiesData));
+        
+        // Generar recomendaciones basadas en intereses del usuario
+        const recommended = generateRecommendations(activitiesData, user?.interests || []);
+        dispatch(setRecommendedActivities(recommended));
+        
     } catch (error) {
-      console.error('Error loading data:', error)
+        console.error('Error loading data:', error);
     }
-  }
+  };
 
   const generateRecommendations = (allActivities: Activity[], userInterests: string[]): Activity[] => {
     // Si no hay intereses, mostrar actividades aleatorias
