@@ -16,18 +16,26 @@ const LoginPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const data: AuthResponse = await loginUser(email, password); // asegúrate que esto devuelva AuthResponse
+      const data: AuthResponse = await loginUser(email, password);
+      if (!data || !data.token || !data.usuario) {
+        throw new Error('Respuesta inválida del servidor');
+      }
+
+      console.log('Datos recibidos:', data); // Para debugging
       dispatch(
         loginSuccess({
           user: {
-            ...data.user,
-            id: Number(data.user.id), // Convert id to number
-            nombre: data.user.name, // Map 'name' to 'nombre'
+            id: data.usuario.id_usuario,
+            nombre: data.usuario.nombre,
+            email: data.usuario.email,
+            score: data.usuario.puntaje_total,
+            streak: data.usuario.streak_actual,
+            isFirstTime: data.usuario.primer_ingreso,
           },
           token: data.token,
         })
       );
-      navigate('/');
+      navigate('/home');
     } catch {
       setError('Error al iniciar sesión');
     }

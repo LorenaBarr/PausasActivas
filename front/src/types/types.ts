@@ -12,12 +12,22 @@ export interface User {
 
 export interface AuthResponse {
     token: string;
-    user: {
-        id: string;
-        name: string;
+    usuario: {
+        id_usuario: number;
+        nombre: string;
+        apellido: string;
         email: string;
+        compania: string;
+        pais: string;
+        password: string;
+        puntaje_total: number;
+        streak_actual: number;
+        ultimo_acceso: string | null;
+        fecha_registro: string;
+        primer_ingreso: boolean;
     };
-  }
+}
+
 
 export interface Activity {
     id: string;

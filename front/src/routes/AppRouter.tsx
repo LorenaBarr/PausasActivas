@@ -10,8 +10,8 @@ const AppRouter = () => {
 
   return (
     <Routes>
-      <Route path="/" element={isAuthenticated ? <HomePage /> : <Navigate to="/login" />} />
-      <Route path="/login" element={<LoginPage />} />
+      <Route path="/" element={isAuthenticated ? <LoginPage /> : <Navigate to="/home" />} />
+      <Route path="/home" element={<HomePage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="/history" element={<HistoryPage />} />
