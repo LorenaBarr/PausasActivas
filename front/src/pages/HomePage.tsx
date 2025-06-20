@@ -28,8 +28,13 @@ const HomePage: React.FC = () => {
 
   const loadInitialData = async () => {
     try {
+      // Verificar que el usuario esté disponible
+        if (!user?.id) {
+            console.error('Usuario no disponible');
+            return;
+        }
         // Obtener actividades de la base de datos
-        const activitiesData = await getActivities();
+        const activitiesData = await getActivities(user.id);
         dispatch(setActivities(activitiesData));
         
         // Generar recomendaciones basadas en intereses del usuario

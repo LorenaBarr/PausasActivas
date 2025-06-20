@@ -20,7 +20,7 @@ export const registerUser = async (data: any): Promise<AuthResponse> => {
     return response.data;
 };
 
-export const getActivities = async (): Promise<Activity[]> => {
-    const response = await api.get<Activity[]>('/activities');
+export const getActivities = async (userId: number): Promise<Activity[]> => {
+    const response = await api.get<Activity[]>(`/activities/${userId}`);
     return response.data;
 };
