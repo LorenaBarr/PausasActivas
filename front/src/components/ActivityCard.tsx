@@ -6,6 +6,13 @@ import { completeActivity } from '../features/activitySlice'
 import { updateUserScore, addCompletedActivity } from '../features/authSlice'
 import type { ActivityCardProps } from '../types/types'
 
+
+function getYouTubeId(url: string): string | undefined {
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? match[2] : undefined;
+}
+
 const ActivityCard: React.FC<ActivityCardProps> = ({ 
   activity, 
   onComplete, 
@@ -106,17 +113,30 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
       )}
       
       {activity.videoUrl && !activity.imageUrl && (
-        <div className="mb-4">
-          <video 
-            className="w-full h-48 object-cover rounded-md"
-            controls
-            poster="/api/placeholder/400/200"
-          >
-            <source src={activity.videoUrl} type="video/mp4" />
-            Tu navegador no soporta el video.
-          </video>
-        </div>
-      )}
+  <div className="mb-4">
+    {activity.videoUrl.includes('youtube.com') || activity.videoUrl.includes('youtu.be') ? (
+      <iframe
+        width="100%"
+        height="220"
+        src={`https://www.youtube.com/embed/${getYouTubeId(activity.videoUrl)}`}
+        title={activity.name}
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        className="w-full h-56 rounded-md"
+      />
+    ) : (
+      <video 
+        className="w-full h-48 object-cover rounded-md"
+        controls
+        poster="/api/placeholder/400/200"
+      >
+        <source src={activity.videoUrl} type="video/mp4" />
+        Tu navegador no soporta el video.
+      </video>
+    )}
+  </div>
+)}
       
       {/* Descripción */}
       <p className="text-gray-600 text-sm mb-4 line-clamp-2">
