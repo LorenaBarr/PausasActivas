@@ -52,6 +52,12 @@ const authSlice = createSlice({
                 }
             }
         },
+        resetUserScore: (state) => {
+            if (state.user) {
+                state.user.score = 0
+                state.user.streak = 0
+            }
+        },
         addCompletedActivity: (state, action: PayloadAction<{ activityId: string; points: number }>) => {
             if (state.user) {
                 const completedActivity = {
@@ -80,7 +86,8 @@ export const {
     updateUserInterests,
     updateUserScore,
     addCompletedActivity,
-    clearError
+    clearError,
+    resetUserScore
 } = authSlice.actions
 
 export default authSlice.reducer

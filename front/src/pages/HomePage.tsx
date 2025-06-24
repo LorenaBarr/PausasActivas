@@ -2,7 +2,8 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import type { RootState, AppDispatch } from '../app/store'
-import { setRecommendedActivities, setActivities } from '../features/activitySlice'
+import { setRecommendedActivities, setActivities, setCompletedToday } from '../features/activitySlice'
+import { resetUserScore } from '../features/authSlice'
 import type { Activity } from '../types/types'
 import ActivityCard from '../components/ActivityCard'
 import Navbar from '../components/Navbar'
@@ -25,6 +26,14 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     loadInitialData()
   }, [])
+
+  const handleResetCompleted = () => {
+    dispatch(setCompletedToday([]))
+  }
+   const handleResetScoreAndStreak = () => {
+    dispatch(resetUserScore())
+  }
+  
 
   const loadInitialData = async () => {
     try {
@@ -167,7 +176,24 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </div>
-
+      {/* ESTE BOTON ES PARA LIMPIAR LA TAREAS (Comentar para su uso) */}
+      <div className="max-w-7xl mx-auto px-4 py-2">
+        <button
+          onClick={handleResetCompleted}
+          className="mb-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+        >
+          Limpiar tareas completadas hoy (solo pruebas)
+        </button>
+      </div>
+      <div className="max-w-7xl mx-auto px-4 py-2 flex gap-4">
+        <button
+          onClick={handleResetScoreAndStreak}
+          className="mb-4 px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+        >
+          Reiniciar puntos y racha (solo pruebas)
+        </button>
+      </div>
+      {/* ***************************************************************** */}
       {/* Contenido principal */}
       <div className="max-w-7xl mx-auto px-4 py-8">
         

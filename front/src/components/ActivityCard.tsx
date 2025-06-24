@@ -17,17 +17,24 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
   const { completedToday } = useSelector((state: RootState) => state.activities)
   const { user } = useSelector((state: RootState) => state.auth)
 
+    // Estado local para mostrar el cambio inmediato del botón
+  const [localCompleted, setLocalCompleted] = React.useState(isCompleted)
+
+  React.useEffect(() => {
+    setLocalCompleted(isCompleted)
+  }, [isCompleted])
+
   const handleComplete = () => {
-    if (!canComplete || isCompleted || completedToday.includes(activity.id)) return
+    if (!canComplete || localCompleted || completedToday.includes(activity.id)) return
 
     // Calcular puntos según lógica del negocio
-    const todayCount = completedToday.length
-    const points = todayCount === 0 ? 4 : 6 // Primera: 4 puntos, Segunda: 6 puntos
+    const points = activity.points
 
     // Dispatch para completar actividad
     dispatch(completeActivity(activity.id))
     
     // Actualizar puntaje del usuario
+    const todayCount = completedToday.length
     const newStreak = (user?.streak || 0) + (todayCount === 1 ? 1 : 0)
     dispatch(updateUserScore({ points, streak: newStreak }))
     
@@ -39,6 +46,9 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
     
     // Callback para el componente padre
     onComplete(activity.id)
+
+    // Cambia el estado local para mostrar "Completada"
+    setLocalCompleted(true)
   }
 
   const getDifficultyColor = (difficulty: string) => {
@@ -131,28 +141,25 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
         
         <button
           onClick={handleComplete}
-          disabled={!canComplete || isCompleted}
+          disabled={!canComplete || localCompleted}
           className={`px-4 py-2 rounded-md font-medium transition-colors ${
-            isCompleted
+            localCompleted
               ? 'bg-green-100 text-green-700 cursor-not-allowed'
               : !canComplete
               ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
               : 'bg-blue-600 text-white hover:bg-blue-700'
           }`}
         >
-          {isCompleted 
+          {localCompleted 
             ? '✓ Completada' 
-            : !canComplete 
-            ? 'Límite alcanzado'
-            : 'Completar'
+            : 'Aceptar'
           }
         </button>
       </div>
       
       {/* Indicador de puntos */}
       <div className="mt-2 text-xs text-center text-gray-500">
-        {completedToday.length === 0 && '+4 puntos'}
-        {completedToday.length === 1 && '+6 puntos (10 total por día completo)'}
+        +{activity.points} puntos
       </div>
     </div>
   )
