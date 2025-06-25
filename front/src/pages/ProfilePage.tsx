@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Trophy, Star, Calendar, Clock, Award, Mail, Settings, Edit } from 'lucide-react';
+import { Trophy, Star, Calendar, Clock, Award, Settings, Edit } from 'lucide-react';
 
 interface Achievement {
   id: string;
@@ -29,13 +29,13 @@ const ProfilePage: React.FC = () => {
 
   // Datos de ejemplo - en producción vendrían de la API
   const mockStats = {
-    totalPoints: 1250,
-    currentStreak: 12,
-    longestStreak: 28,
-    totalActivities: 156,
-    weeklyAverage: 8,
-    monthlyGoal: 200,
-    monthlyProgress: 145
+    totalPoints: 32,
+    currentStreak: 2,
+    longestStreak: 2,
+    totalActivities: 6,
+    weeklyAverage: 3,
+    monthlyGoal: 12,
+    monthlyProgress: 5
   };
 
   const mockAchievements: Achievement[] = [
@@ -45,7 +45,6 @@ const ProfilePage: React.FC = () => {
       description: 'Completa tu primera actividad',
       icon: '🏆',
       earned: true,
-      earnedDate: '2024-01-15',
       points: 10
     },
     {
@@ -54,7 +53,6 @@ const ProfilePage: React.FC = () => {
       description: 'Completa ambas pausas en un día',
       icon: '⭐',
       earned: true,
-      earnedDate: '2024-01-16',
       points: 10
     },
     {
@@ -63,7 +61,6 @@ const ProfilePage: React.FC = () => {
       description: 'Mantén una racha de 5 días',
       icon: '🔥',
       earned: true,
-      earnedDate: '2024-01-20',
       points: 25
     },
     {
@@ -72,7 +69,6 @@ const ProfilePage: React.FC = () => {
       description: 'Completa todas las pausas durante 5 días laborables',
       icon: '👑',
       earned: true,
-      earnedDate: '2024-01-25',
       points: 30
     },
     {

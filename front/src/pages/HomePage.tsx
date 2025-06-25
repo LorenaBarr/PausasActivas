@@ -8,21 +8,22 @@ import type { Activity } from '../types/types'
 import ActivityCard from '../components/ActivityCard'
 import Navbar from '../components/Navbar'
 import { getActivities } from '../services/api'
+import { useNavigate } from 'react-router-dom'
 
 const HomePage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const { 
-    recommendedActivities, 
-    activities, 
+  const {
+    recommendedActivities,
+    activities,
     categories,
     completedToday,
     isLoading,
     searchTerm,
     selectedCategory
   } = useSelector((state: RootState) => state.activities)
-  
-  const { user } = useSelector((state: RootState) => state.auth)
 
+  const { user } = useSelector((state: RootState) => state.auth)
+  const navigate = useNavigate()
   useEffect(() => {
     loadInitialData()
   }, [])
@@ -30,28 +31,28 @@ const HomePage: React.FC = () => {
   const handleResetCompleted = () => {
     dispatch(setCompletedToday([]))
   }
-   const handleResetScoreAndStreak = () => {
+  const handleResetScoreAndStreak = () => {
     dispatch(resetUserScore())
   }
-  
+
 
   const loadInitialData = async () => {
     try {
       // Verificar que el usuario esté disponible
-        if (!user?.id) {
-            console.error('Usuario no disponible');
-            return;
-        }
-        // Obtener actividades de la base de datos
-        const activitiesData = await getActivities(user.id);
-        dispatch(setActivities(activitiesData));
-        
-        // Generar recomendaciones basadas en intereses del usuario
-        const recommended = generateRecommendations(activitiesData, user?.interests || []);
-        dispatch(setRecommendedActivities(recommended));
-        
+      if (!user?.id) {
+        console.error('Usuario no disponible');
+        return;
+      }
+      // Obtener actividades de la base de datos
+      const activitiesData = await getActivities(user.id);
+      dispatch(setActivities(activitiesData));
+
+      // Generar recomendaciones basadas en intereses del usuario
+      const recommended = generateRecommendations(activitiesData, user?.interests || []);
+      dispatch(setRecommendedActivities(recommended));
+
     } catch (error) {
-        console.error('Error loading data:', error);
+      console.error('Error loading data:', error);
     }
   };
 
@@ -60,12 +61,12 @@ const HomePage: React.FC = () => {
     if (userInterests.length === 0) {
       return allActivities.slice(0, 3)
     }
-    
+
     // Filtrar por intereses del usuario
     const filteredActivities = allActivities.filter(
       (activity: Activity) => userInterests.includes(activity.category)
     )
-    
+
     // Si no hay suficientes actividades filtradas, completar con otras
     const result = [...filteredActivities]
     if (result.length < 3) {
@@ -74,7 +75,7 @@ const HomePage: React.FC = () => {
       )
       result.push(...remaining.slice(0, 3 - result.length))
     }
-    
+
     // Mezclar y tomar 3
     return result.sort(() => Math.random() - 0.5).slice(0, 3)
   }
@@ -103,7 +104,7 @@ const HomePage: React.FC = () => {
     }
 
     if (searchTerm) {
-      filtered = filtered.filter(activity => 
+      filtered = filtered.filter(activity =>
         activity.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         activity.description.toLowerCase().includes(searchTerm.toLowerCase())
       )
@@ -117,7 +118,7 @@ const HomePage: React.FC = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Navbar 
+        <Navbar
           onSearch={handleSearch}
           onCategoryFilter={handleCategoryFilter}
           categories={categories}
@@ -132,13 +133,13 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar 
+      <Navbar
         onSearch={handleSearch}
         onCategoryFilter={handleCategoryFilter}
         categories={categories}
         selectedCategory={selectedCategory}
       />
-      
+
       {/* Header con saludo */}
       <div className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-6">
@@ -151,9 +152,16 @@ const HomePage: React.FC = () => {
                 Es hora de una pausa activa para tu bienestar
               </p>
             </div>
-            
+
             {/* Stats rápidas */}
             <div className="flex space-x-6">
+              <button
+                className="ml-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors text-sm font-semibold"
+                onClick={() => navigate('/profile')}
+                type="button"
+              >
+                Perfil
+              </button>
               <div className="text-center">
                 <div className="text-2xl font-bold text-blue-600">
                   {user?.score || 0}
@@ -177,7 +185,7 @@ const HomePage: React.FC = () => {
         </div>
       </div>
       {/* ESTE BOTON ES PARA LIMPIAR LA TAREAS (Comentar para su uso) */}
-      <div className="max-w-7xl mx-auto px-4 py-2">
+      {/* <div className="max-w-7xl mx-auto px-4 py-2">
         <button
           onClick={handleResetCompleted}
           className="mb-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
@@ -192,11 +200,11 @@ const HomePage: React.FC = () => {
         >
           Reiniciar puntos y racha (solo pruebas)
         </button>
-      </div>
+      </div> */}
       {/* ***************************************************************** */}
       {/* Contenido principal */}
       <div className="max-w-7xl mx-auto px-4 py-8">
-        
+
         {/* Actividades Recomendadas */}
         {recommendedActivities?.length > 0 && (
           <section className="mb-12">
@@ -208,7 +216,7 @@ const HomePage: React.FC = () => {
                 Basado en tus intereses
               </span>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {recommendedActivities.map((activity: Activity) => (
                 <ActivityCard
@@ -231,24 +239,24 @@ const HomePage: React.FC = () => {
               {selectedCategory ? `Actividades: ${selectedCategory}` : 'Todas las Actividades'}
             </h2>
             <span className="text-sm text-gray-500">
-            {filteredActivities?.length || 0} actividades {searchTerm && `para "${searchTerm}"`}
+              {filteredActivities?.length || 0} actividades {searchTerm && `para "${searchTerm}"`}
 
             </span>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {(filteredActivities || []).map((activity: Activity) => (
-  <ActivityCard
-    key={activity.id}
-    activity={activity}
-    onComplete={handleActivityComplete}
-    isCompleted={completedToday.includes(activity.id)}
-    isRecommended={false}
-    canComplete={completedToday.length < 2}
-  />
-))}
+            {(filteredActivities || []).map((activity: Activity) => (
+              <ActivityCard
+                key={activity.id}
+                activity={activity}
+                onComplete={handleActivityComplete}
+                isCompleted={completedToday.includes(activity.id)}
+                isRecommended={false}
+                canComplete={completedToday.length < 2}
+              />
+            ))}
           </div>
-          
+
           {(filteredActivities?.length || 0) === 0 && (
             <div className="text-center py-12">
               <p className="text-gray-500">
