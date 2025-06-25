@@ -1,4 +1,3 @@
-// pages/HomePage.tsx - Adaptado a tus tipos existentes
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import type { RootState, AppDispatch } from '../app/store'
@@ -38,16 +37,13 @@ const HomePage: React.FC = () => {
 
   const loadInitialData = async () => {
     try {
-      // Verificar que el usuario esté disponible
       if (!user?.id) {
         console.error('Usuario no disponible');
         return;
       }
-      // Obtener actividades de la base de datos
       const activitiesData = await getActivities(user.id);
       dispatch(setActivities(activitiesData));
 
-      // Generar recomendaciones basadas en intereses del usuario
       const recommended = generateRecommendations(activitiesData, user?.interests || []);
       dispatch(setRecommendedActivities(recommended));
 
@@ -57,17 +53,14 @@ const HomePage: React.FC = () => {
   };
 
   const generateRecommendations = (allActivities: Activity[], userInterests: string[]): Activity[] => {
-    // Si no hay intereses, mostrar actividades aleatorias
     if (userInterests.length === 0) {
       return allActivities.slice(0, 3)
     }
 
-    // Filtrar por intereses del usuario
     const filteredActivities = allActivities.filter(
       (activity: Activity) => userInterests.includes(activity.category)
     )
 
-    // Si no hay suficientes actividades filtradas, completar con otras
     const result = [...filteredActivities]
     if (result.length < 3) {
       const remaining = allActivities.filter(
@@ -76,26 +69,21 @@ const HomePage: React.FC = () => {
       result.push(...remaining.slice(0, 3 - result.length))
     }
 
-    // Mezclar y tomar 3
     return result.sort(() => Math.random() - 0.5).slice(0, 3)
   }
 
   const handleActivityComplete = (activityId: string) => {
     console.log(`Actividad ${activityId} completada`)
-    // Aquí harías la llamada a tu API para registrar la actividad
   }
 
   const handleSearch = (term: string) => {
-    // Implementar lógica de búsqueda
     console.log('Searching for:', term)
   }
 
   const handleCategoryFilter = (category: string) => {
-    // Implementar lógica de filtro por categoría
     console.log('Filtering by category:', category)
   }
 
-  // Filtrar actividades según búsqueda y categoría
   const getFilteredActivities = () => {
     let filtered = activities
 
@@ -140,7 +128,6 @@ const HomePage: React.FC = () => {
         selectedCategory={selectedCategory}
       />
 
-      {/* Header con saludo */}
       <div className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="flex justify-between items-center">
@@ -153,7 +140,6 @@ const HomePage: React.FC = () => {
               </p>
             </div>
 
-            {/* Stats rápidas */}
             <div className="flex space-x-6">
               <button
                 className="ml-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors text-sm font-semibold"
@@ -184,24 +170,6 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </div>
-      {/* ESTE BOTON ES PARA LIMPIAR LA TAREAS (Comentar para su uso) */}
-      {/* <div className="max-w-7xl mx-auto px-4 py-2">
-        <button
-          onClick={handleResetCompleted}
-          className="mb-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-        >
-          Limpiar tareas completadas hoy (solo pruebas)
-        </button>
-      </div>
-      <div className="max-w-7xl mx-auto px-4 py-2 flex gap-4">
-        <button
-          onClick={handleResetScoreAndStreak}
-          className="mb-4 px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600"
-        >
-          Reiniciar puntos y racha (solo pruebas)
-        </button>
-      </div> */}
-      {/* ***************************************************************** */}
       {/* Contenido principal */}
       <div className="max-w-7xl mx-auto px-4 py-8">
 

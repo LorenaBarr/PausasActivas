@@ -1,15 +1,10 @@
 const actividadesController = require('../controllers/activitiesController');
-const authMiddleware = require('../middleware/authMiddleware'); // verifica JWT
+const authMiddleware = require('../middleware/authMiddleware');
 
-// router.get('/recomendadas', authMiddleware, actividadesController.obtenerRecomendadas);
-
-
-// back/src/routes/activities.js
 const express = require('express');
 const { pool } = require('../config/db');
 const router = express.Router();
 
-// GET /api/activities - Obtener todas las actividades
 router.get('/:userId', async (req, res) => {
     try {     
         const { userId } = req.params;

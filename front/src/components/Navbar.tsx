@@ -80,7 +80,6 @@ const Navbar: React.FC<NavbarProps> = ({
                         ))}
                     </div>
 
-                    {/* Menú de usuario */}
                     <div className="flex items-center space-x-4">
                         <div className="relative">
                             <button
@@ -97,7 +96,6 @@ const Navbar: React.FC<NavbarProps> = ({
                 </div>
             </div>
 
-            {/* Barra de búsqueda móvil (oculta en esta versión de escritorio) */}
             <div className="md:hidden px-4 py-2 border-t border-gray-200" style={{ display: 'none' }}>
                 <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">

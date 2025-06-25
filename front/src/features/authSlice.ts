@@ -1,9 +1,7 @@
-// features/authSlice.ts - Adaptado a tus tipos existentes
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import type { User, AuthState } from '../types/types'; // Importar tus tipos
- // Importar tus tipos
+import type { User, AuthState } from '../types/types';
 
 const initialState: AuthState = {
     user: null,

@@ -16,7 +16,6 @@ const HistoryPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [showFilters, setShowFilters] = useState(false);
 
-  // Datos de ejemplo - en producción vendrían de la API
   const mockHistory: HistoryEntry[] = [
     {
       id: '1',
@@ -50,38 +49,7 @@ const HistoryPage: React.FC = () => {
       points: 4,
       duration: '7 min'
     },
-    {
-      id: '5',
-      activityName: 'Juego de memoria rápida',
-      category: 'pausas-recreativas',
-      completedAt: '2024-06-10T14:10:00Z',
-      points: 4,
-      duration: '8 min'
-    },
-    {
-      id: '6',
-      activityName: 'Estiramiento de espalda',
-      category: 'pausas-fisicas',
-      completedAt: '2024-06-10T09:30:00Z',
-      points: 4,
-      duration: '6 min'
-    },
-    {
-      id: '7',
-      activityName: 'Relajación visual',
-      category: 'pausas-visuales',
-      completedAt: '2024-06-09T15:00:00Z',
-      points: 3,
-      duration: '3 min'
-    },
-    {
-      id: '8',
-      activityName: 'Meditación rápida',
-      category: 'pausas-cognitivas',
-      completedAt: '2024-06-09T12:45:00Z',
-      points: 5,
-      duration: '8 min'
-    }
+
   ];
 
   const categories = [

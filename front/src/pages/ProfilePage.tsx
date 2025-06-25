@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Trophy, Star, Calendar, Clock, Award, Settings, Edit } from 'lucide-react';
+import { getUserAchievements } from '../services/api';
 
 interface Achievement {
   id: string;
@@ -38,65 +39,33 @@ const ProfilePage: React.FC = () => {
     monthlyProgress: 5
   };
 
-  const mockAchievements: Achievement[] = [
-    {
-      id: '1',
-      name: '¡Primer paso!',
-      description: 'Completa tu primera actividad',
-      icon: '🏆',
-      earned: true,
-      points: 10
-    },
-    {
-      id: '2',
-      name: 'Día perfecto',
-      description: 'Completa ambas pausas en un día',
-      icon: '⭐',
-      earned: true,
-      points: 10
-    },
-    {
-      id: '3',
-      name: '¡Imparable!',
-      description: 'Mantén una racha de 5 días',
-      icon: '🔥',
-      earned: true,
-      points: 25
-    },
-    {
-      id: '4',
-      name: 'Semana perfecta',
-      description: 'Completa todas las pausas durante 5 días laborables',
-      icon: '👑',
-      earned: true,
-      points: 30
-    },
-    {
-      id: '5',
-      name: 'Mes de oro',
-      description: 'Completa 100 actividades en un mes',
-      icon: '🥇',
-      earned: false,
-      points: 50
-    },
-    {
-      id: '6',
-      name: 'Explorador',
-      description: 'Prueba actividades de todas las categorías',
-      icon: '🧭',
-      earned: false,
-      points: 20
-    }
-  ];
+
+  const [achievements, setAchievements] = useState<Achievement[]>([]);
+  const [loadingAchievements, setLoadingAchievements] = useState(true);
+
+  useEffect(() => {
+    const fetchAchievements = async () => {
+      if (!user?.id) return;
+      setLoadingAchievements(true);
+      try {
+        const data = await getUserAchievements(user.id);
+        setAchievements(data);
+      } catch (error) {
+        console.error('Error al cargar logros:', error);
+      } finally {
+        setLoadingAchievements(false);
+      }
+    };
+    fetchAchievements();
+  }, [user?.id]);
+
 
   const handleSaveNotifications = () => {
-    // Aquí guardarías la configuración en el backend
-    console.log('Guardando configuración de notificaciones:', notificationSettings);
     alert('Configuración guardada exitosamente');
   };
 
-  const earnedAchievements = mockAchievements.filter(a => a.earned);
-  const unlockedAchievements = mockAchievements.filter(a => !a.earned);
+  const earnedAchievements = achievements.filter(a => a.earned);
+  const unlockedAchievements = achievements.filter(a => !a.earned);
 
   const getProgressPercentage = () => {
     return Math.min((mockStats.monthlyProgress / mockStats.monthlyGoal) * 100, 100);

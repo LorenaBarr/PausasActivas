@@ -21,7 +21,6 @@ const LoginPage = () => {
         throw new Error('Respuesta inválida del servidor');
       }
 
-      console.log('Datos recibidos:', data); // Para debugging
       dispatch(
         loginSuccess({
           user: {

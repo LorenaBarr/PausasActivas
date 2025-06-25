@@ -37,7 +37,7 @@ export interface Activity {
     instructions: string;
     imageUrl?: string;
     videoUrl?: string;
-    duration: number; // en minutos
+    duration: number;
     difficulty: 'Fácil' | 'Medio' | 'Difícil';
     points: number;
 }
@@ -56,7 +56,6 @@ export interface AuthState {
     error: string | null;
 }
 
-// Props para componentes
 export interface InterestModalProps {
     onClose: () => void;
 }

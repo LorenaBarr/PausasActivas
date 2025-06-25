@@ -1,4 +1,3 @@
-// components/ActivityCard.tsx - Adaptado a tus tipos existentes
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import type { RootState, AppDispatch } from '../app/store'
@@ -24,7 +23,6 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
   const { completedToday } = useSelector((state: RootState) => state.activities)
   const { user } = useSelector((state: RootState) => state.auth)
 
-    // Estado local para mostrar el cambio inmediato del botón
   const [localCompleted, setLocalCompleted] = React.useState(isCompleted)
 
   React.useEffect(() => {
@@ -34,27 +32,21 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
   const handleComplete = () => {
     if (!canComplete || localCompleted || completedToday.includes(activity.id)) return
 
-    // Calcular puntos según lógica del negocio
     const points = activity.points
 
-    // Dispatch para completar actividad
     dispatch(completeActivity(activity.id))
     
-    // Actualizar puntaje del usuario
     const todayCount = completedToday.length
     const newStreak = (user?.streak || 0) + (todayCount === 1 ? 1 : 0)
     dispatch(updateUserScore({ points, streak: newStreak }))
     
-    // Agregar a actividades completadas
     dispatch(addCompletedActivity({ 
       activityId: activity.id, 
       points 
     }))
     
-    // Callback para el componente padre
     onComplete(activity.id)
 
-    // Cambia el estado local para mostrar "Completada"
     setLocalCompleted(true)
   }
 
@@ -71,7 +63,6 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
     <div className={`bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow ${
       isRecommended ? 'ring-2 ring-blue-200' : ''
     }`}>
-      {/* Header con categoría y recomendado */}
       <div className="flex justify-between items-start mb-3">
         <span className="text-sm text-blue-600 font-medium">
           {activity.category}
@@ -83,12 +74,10 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
         )}
       </div>
       
-      {/* Título de la actividad */}
       <h3 className="text-lg font-semibold text-gray-800 mb-2">
         {activity.name}
       </h3>
       
-      {/* Dificultad y duración */}
       <div className="flex items-center gap-2 mb-3">
         <span className={`text-xs px-2 py-1 rounded-full ${getDifficultyColor(activity.difficulty)}`}>
           {activity.difficulty}
@@ -101,7 +90,6 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
         </span>
       </div>
       
-      {/* Imagen/Video */}
       {activity.imageUrl && (
         <div className="mb-4">
           <img 
@@ -138,12 +126,10 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
   </div>
 )}
       
-      {/* Descripción */}
       <p className="text-gray-600 text-sm mb-4 line-clamp-2">
         {activity.description}
       </p>
       
-      {/* Instrucciones (ocultas por defecto) */}
       <details className="mb-4">
         <summary className="text-sm text-blue-600 cursor-pointer hover:text-blue-700">
           Ver instrucciones
@@ -152,8 +138,7 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
           {activity.instructions}
         </p>
       </details>
-      
-      {/* Botón de completar */}
+
       <div className="flex justify-between items-center">
         <div className="text-sm text-gray-500">
           {completedToday.length}/2 completadas hoy
@@ -177,7 +162,6 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
         </button>
       </div>
       
-      {/* Indicador de puntos */}
       <div className="mt-2 text-xs text-center text-gray-500">
         +{activity.points} puntos
       </div>

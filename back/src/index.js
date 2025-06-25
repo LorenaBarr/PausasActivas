@@ -5,12 +5,12 @@ const app = express();
 
 const authRoutes = require('./routes/auth');
 const activitiesRouter = require('./routes/activities');
+const achievementsRoutes = require('./routes/achievements');
 
-// Configuración CORS específica para resolver el error
 const corsOptions = {
-    origin: 'http://localhost:5173', // URL exacta de tu frontend React (Vite)
-    credentials: true, // Permite el envío de credenciales (cookies, headers de auth)
-    optionsSuccessStatus: 200, // Para navegadores legacy
+    origin: 'http://localhost:5173',
+    credentials: true,
+    optionsSuccessStatus: 200,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token']
 };
@@ -20,6 +20,7 @@ app.use(express.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/activities', activitiesRouter);
+app.use('/api/achievements', achievementsRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Servidor corriendo en puerto ${PORT}`));

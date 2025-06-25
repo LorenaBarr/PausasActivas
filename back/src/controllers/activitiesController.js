@@ -2,7 +2,7 @@ const actividadesService = require('../services/activitiesService');
 
 const obtenerRecomendadas = async (req, res) => {
     try {
-        const idUsuario = req.user.id_usuario; // asumimos que está autenticado
+        const idUsuario = req.user.id_usuario;
         const actividades = await actividadesService.getActividadesRecomendadas(idUsuario);
         res.status(200).json(actividades);
     } catch (err) {
